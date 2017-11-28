@@ -1,3 +1,4 @@
 export const config = {
-    blockNum: 10,
+    blockColumnNum: 10,
+    blockRowNum: 20,
 };

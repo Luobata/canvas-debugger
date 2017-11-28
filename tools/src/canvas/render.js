@@ -5,24 +5,29 @@ const getFocus = () => {
 
 const createLine = (div) => {
     const body = document.body;
-    const blockNum = config.blockNum;
-    const width = body.offsetWidth / blockNum;
-    const height = body.offsetHeight / blockNum;
+    const blockColumnNum = config.blockColumnNum;
+    const blockRowNum = config.blockRowNum;
+    const width = body.offsetWidth / blockColumnNum;
+    const height = body.offsetHeight / blockRowNum;
     const beginX = 0;
     const beginY = 0;
-    const focusPoint = getFocus();
+    const focusPoint = [];
 
-    for (let i = 0; i < blockNum - 1; i++) {
-        const line = document.createElement('div');
+    for (let i = 0; i < blockColumnNum - 1; i++) {
+        const column = document.createElement('div');
+        column.style.width = '1px';
+        column.style.height = '100%';
+        column.style.background = '#FC6246';
+        column.style.display = 'inline-block';
+        column.style.position = 'absolute';
+        column.style.left = beginX + (i + 1) * width + 'px';
+
+        div.appendChild(column);
+
+    }
+
+    for (let i = 0; i < blockRowNum - 1; i++) {
         const row = document.createElement('div');
-        line.style.width = '1px';
-        line.style.height = '100%';
-        line.style.background = '#FC6246';
-        line.style.display = 'inline-block';
-        line.style.position = 'absolute';
-        line.style.left = beginX + (i + 1) * width + 'px';
-
-        div.appendChild(line);
 
         row.style.width = '100%';
         row.style.height = '1px';
@@ -45,6 +50,7 @@ const createWrap = () => {
             div.style.width = body.offsetWidth + 'px';
             div.style.height = body.offsetHeight + 'px';
             div.style.position = 'fixed';
+            div.style['z-index'] = 1000;
             div.style.top = 0;
             div.style.left = 0;
 
