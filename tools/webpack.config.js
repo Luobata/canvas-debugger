@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
+var root = path.resolve(__dirname, './');
 
 var bubleOptions = {
     target: process.env.NODE_ENV === 'production' ? null : { chrome: 52, firefox: 48 },
@@ -8,7 +9,7 @@ var bubleOptions = {
 
 module.exports = {
     entry: {
-         hook: './src/hook.js',
+         canvas: './src/canvas.js',
          //devtools: './src/devtools.js',
          background: './src/background.js',
     },
@@ -24,12 +25,12 @@ module.exports = {
         }
     },
     module: {
-        rules: [
+        loaders: [
             {
                 test: /\.js$/,
-                loader: 'buble-loader',
-                exclude: /node_modules|vue\/dist|vuex\/dist/,
-                options: bubleOptions
+                loader: 'babel',
+                exclude: /node_modules|build/,
+                include: root
             },
             {
                 test: /\.(png|woff2)$/,
