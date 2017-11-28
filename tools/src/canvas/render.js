@@ -1,6 +1,24 @@
 import { config } from './config';
 
-const getFocus = () => {
+const getFocus = (column, row) => {
+    const arr = [];
+    const beginX = 0;
+    const beginY = 0;
+    const body = document.body;
+    const width = body.offsetWidth / column;
+    const height = body.offsetHeight / row;
+
+    for (let i = 0; i < column - 1; i++) {
+        for (let j = 0; j < row - 1; j++) {
+            arr.push((beginX + (i + 1) * width) + ',' +
+                (beginY + (j + 1) * height)
+            );
+        }
+    }
+
+    console.log(arr);
+
+    return arr;
 };
 
 const createLine = (div) => {
@@ -11,10 +29,11 @@ const createLine = (div) => {
     const height = body.offsetHeight / blockRowNum;
     const beginX = 0;
     const beginY = 0;
-    const focusPoint = [];
+    const focusPoint = getFocus(blockColumnNum, blockRowNum);
 
     for (let i = 0; i < blockColumnNum - 1; i++) {
         const column = document.createElement('div');
+
         column.style.width = '1px';
         column.style.height = '100%';
         column.style.background = '#FC6246';
