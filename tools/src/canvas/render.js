@@ -75,9 +75,9 @@ const createLine = (div) => {
         point.style['vertical-align'] = 'top';
 
         pointTxt.innerText = `(${i[0]},${i[1]})`;
-        pointTxt.style.position = 'relative';
-        pointTxt.style.left = '-50%';
-        pointTxt.style.top = '10px';
+        pointTxt.style.position = 'absolute';
+        // pointTxt.style.left = '-50%';
+        pointTxt.style.top = '20px';
 
         pointWrap.addEventListener('mouseover', function mouseover() {
             this.style.opacity = 1;
