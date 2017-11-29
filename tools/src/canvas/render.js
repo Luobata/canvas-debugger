@@ -10,9 +10,8 @@ const getFocus = (column, row) => {
 
     for (let i = 0; i < column - 1; i++) {
         for (let j = 0; j < row - 1; j++) {
-            arr.push((beginX + (i + 1) * width) + ',' +
-                (beginY + (j + 1) * height)
-            );
+            arr.push([beginX + (i + 1) * width,
+                beginY + (j + 1) * height]);
         }
     }
 
@@ -38,10 +37,9 @@ const createLine = (div) => {
         column.style.background = '#FC6246';
         column.style.display = 'inline-block';
         column.style.position = 'absolute';
-        column.style.left = beginX + (i + 1) * width + 'px';
+        column.style.left = `${beginX + (i + 1) * width}px`;
 
         div.appendChild(column);
-
     }
 
     for (let i = 0; i < blockRowNum - 1; i++) {
@@ -52,41 +50,40 @@ const createLine = (div) => {
         row.style.background = '#FC6246';
         row.style.display = 'inline-block';
         row.style.position = 'absolute';
-        row.style.top = beginY + (i + 1) * height + 'px';
+        row.style.top = `${beginY + (i + 1) * height}px`;
 
         div.appendChild(row);
     }
 
-    for (let i of focusPoint) {
+    for (const i of focusPoint) {
         const pointWrap = document.createElement('div');
         const point = document.createElement('span');
         const pointTxt = document.createElement('span');
-        const width = 15;
-        const position = i.split(',');
+        const wid = 15;
 
         pointWrap.style.opacity = 0;
         pointWrap.style.position = 'absolute';
         pointWrap.style.cursor = 'pointer';
-        pointWrap.style.left = (position[0] - width / 2 + 1 / 2) + 'px';
-        pointWrap.style.top = (position[1] - width / 2 - 1 / 2) + 'px';
+        pointWrap.style.left = `${i[0] - wid / 2 + 1 / 2}px`;
+        pointWrap.style.top = `${i[1] - wid / 2 - 1 / 2}px`;
 
-        point.style.width = width + 'px';
-        point.style.height = width + 'px';
+        point.style.width = `${wid}px`;
+        point.style.height = `${wid}px`;
         point.style.background = '#FC6246';
         point.style.display = 'block';
-        point.style['border-radius'] = width + 'px';
+        point.style['border-radius'] = `${wid}px`;
         point.style['vertical-align'] = 'top';
 
-        pointTxt.innerText = '(' + position[0] + ',' + position[1] + ')'
+        pointTxt.innerText = `(${i[0]},${i[1]})`;
         pointTxt.style.position = 'relative';
         pointTxt.style.left = '-50%';
         pointTxt.style.top = '10px';
 
-        pointWrap.addEventListener('mouseover', function () {
+        pointWrap.addEventListener('mouseover', function mouseover() {
             this.style.opacity = 1;
         });
 
-        pointWrap.addEventListener('mouseout', function () {
+        pointWrap.addEventListener('mouseout', function mouseout() {
             this.style.opacity = 0;
         });
 
@@ -99,28 +96,25 @@ const createLine = (div) => {
     body.appendChild(div);
 };
 
-const createWrap = () => {
-    return new Promise((resolve) => {
-        window.onload = () => {
-            const body = document.body;
-            const div = document.createElement('div');
-            div.style.width = body.offsetWidth + 'px';
-            div.style.height = body.offsetHeight + 'px';
-            div.style.position = 'fixed';
-            div.style['z-index'] = 1000;
-            div.style.top = 0;
-            div.style.left = 0;
+const createWrap = () => new Promise((resolve) => {
+    window.onload = () => {
+        const body = document.body;
+        const div = document.createElement('div');
+        div.style.width = `${body.offsetWidth}px`;
+        div.style.height = `${body.offsetHeight}px`;
+        div.style.position = 'fixed';
+        div.style['z-index'] = 1000;
+        div.style.top = 0;
+        div.style.left = 0;
 
-            resolve(div);
-            //body.appendChild(div);
-        }
-    });
-};
+        resolve(div);
+        // body.appendChild(div);
+    };
+});
 
 export default () => {
     createWrap()
         .then((div) => {
-            console.log(div);
             createLine(div);
         });
 };
