@@ -16,7 +16,6 @@ const getFocus = (column, row) => {
         }
     }
 
-    console.log(arr);
 
     return arr;
 };
@@ -56,6 +55,45 @@ const createLine = (div) => {
         row.style.top = beginY + (i + 1) * height + 'px';
 
         div.appendChild(row);
+    }
+
+    for (let i of focusPoint) {
+        const pointWrap = document.createElement('div');
+        const point = document.createElement('span');
+        const pointTxt = document.createElement('span');
+        const width = 15;
+        const position = i.split(',');
+
+        pointWrap.style.opacity = 0;
+        pointWrap.style.position = 'absolute';
+        pointWrap.style.cursor = 'pointer';
+        pointWrap.style.left = (position[0] - width / 2 + 1 / 2) + 'px';
+        pointWrap.style.top = (position[1] - width / 2 - 1 / 2) + 'px';
+
+        point.style.width = width + 'px';
+        point.style.height = width + 'px';
+        point.style.background = '#FC6246';
+        point.style.display = 'block';
+        point.style['border-radius'] = width + 'px';
+        point.style['vertical-align'] = 'top';
+
+        pointTxt.innerText = '(' + position[0] + ',' + position[1] + ')'
+        pointTxt.style.position = 'relative';
+        pointTxt.style.left = '-50%';
+        pointTxt.style.top = '10px';
+
+        pointWrap.addEventListener('mouseover', function () {
+            this.style.opacity = 1;
+        });
+
+        pointWrap.addEventListener('mouseout', function () {
+            this.style.opacity = 0;
+        });
+
+        pointWrap.appendChild(point);
+        pointWrap.appendChild(pointTxt);
+
+        div.appendChild(pointWrap);
     }
 
     body.appendChild(div);
